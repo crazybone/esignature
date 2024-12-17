@@ -1,0 +1,241 @@
+{
+  "departments": [
+    {
+      "id": 1,
+      "name": "Marketing",
+      "sections": [
+        {
+          "id": 1,
+          "name": "Social Media Ad",
+          "banner": [
+            ""
+          ],
+          "link": [
+            ""
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Email Campaign",
+          "banner": [
+            ""
+          ],
+          "link": [
+            ""
+          ]
+        },
+        {
+          "id": 2,
+          "name": "SEO Strategy",
+          "banner": [
+            ""
+          ],
+          "link": [
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Sales",
+      "sections": [
+        {
+          "id": 1,
+          "name": "Discount Offer",
+          "banner": [
+            ""
+          ],
+          "link": [
+            ""
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Product Launch",
+          "banner": [
+            ""
+          ],
+          "link": [
+            ""
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Referral Program",
+          "banner": [
+            ""
+          ],
+          "link": [
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Product Development",
+      "sections": [
+        {
+          "id": 1,
+          "name": "EcommerceIQ",
+          "banner": [
+            "https://lh3.googleusercontent.com/d/1G8MaV5EBSRc7nk2n8154UriUXYvHTerR"
+          ],
+          "link": [
+            "https://www.acommerce.asia/managed-services/online-store-development/"
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Market Insights",
+          "banner": [
+            "https://lh3.googleusercontent.com/d/12iTNdNzVTdds6sGzezzfHEcWPxxoXWnE"
+          ],
+          "link": [
+            "https://www.acommerce.asia/managed-services/e-commerce-marketing/"
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Price Intelligent",
+          "banner": [
+            "https://lh3.googleusercontent.com/d/17XVwWOWpXcosKCNMGBoYIehMSOIZUTWv"
+          ],
+          "link": [
+            "https://www.acommerce.asia/managed-services/online-store-operations/"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Support",
+      "sections": [
+        {
+          "id": 1,
+          "name": "New Feature",
+          "banner": [
+            ""
+          ],
+          "link": [
+            ""
+          ]
+        },
+        {
+          "id": 2,
+          "name": "Bug Fix",
+          "banner": [
+            ""
+          ],
+          "link": [
+            ""
+          ]
+        },
+        {
+          "id": 3,
+          "name": "API Integration",
+          "banner": [
+            ""          ],
+          "link": [
+            ""
+          ]
+        }
+      ]
+    }
+  ],
+  "countries": [
+    {
+      "id": 1,
+      "name": "Thailand",
+      "code": "66",
+      "address": "33rd Floor, 689 Bhiraj Tower Sukhumvit Rd, Bangkok 10110"
+    },
+    {
+      "id": 2,
+      "name": "Indonesia",
+      "code": "62",
+      "address": "PT aCommerce Solusi Lestari Sahid Sudirman Center Lantai 17A Jl. Jendral Sudirman No 86 Jakarta Pusat 10220"
+    },
+    {
+      "id": 3,
+      "name": "Singapore",
+      "code": "65",
+      "address": "71, Robinson Road, 068895"
+    },
+    {
+      "id": 4,
+      "name": "Philippines",
+      "code": "63",
+      "address": "9/F WeWork Uptown Bonifacio Tower Three 36th St. cor 11th Ave., Bonifacio Global City Taguig, 1634"
+    },
+    {
+      "id": 5,
+      "name": "Malaysia",
+      "code": "60",
+      "address": "Level 7, Oasis Wing, Brunsfield Oasis Tower 3 No. 2 Jalan PJU 1A/7A, Oasis Square, Oasis Damansara, Petaling Jaya, Selangor 47301"
+    }
+  ],
+  "banners": [
+    {
+      "id": 1,
+      "name": "EcommerceIQ",
+      "banner": [
+        {
+          "id": 1,
+          "type": "1column",
+          "image": [
+            "https://lh3.googleusercontent.com/d/17XVwWOWpXcosKCNMGBoYIehMSOIZUTWv"
+          ],
+          "link": [
+            ""
+          ]
+        },
+        {
+          "id": 3,
+          "type": "2column",
+          "image": [
+            "https://lh3.googleusercontent.com/d/17XVwWOWpXcosKCNMGBoYIehMSOIZUTWv"
+          ],
+          "link": [
+            ""
+          ]
+        },
+        {
+          "id": 3,
+          "type": "3column",
+          "image": [
+            "https://lh3.googleusercontent.com/d/17XVwWOWpXcosKCNMGBoYIehMSOIZUTWv"
+          ],
+          "link": [
+            ""
+          ]
+        }
+      ]
+    }
+  ],
+  "logo": [
+    {
+      "id": 1,
+      "name": "aCommerce",
+      "image": "https://lh3.googleusercontent.com/d/1EyD0_Y8yC29c2nwfPefI0KDvug9xkGhK"
+    },    
+    {
+      "id": 2,
+      "name": "EcommerceIQ + aCommerce",
+      "image": "https://lh3.googleusercontent.com/d/1VPxS6jpHWwdN0uslhbqiwcpSb4FdK17m"
+    }
+  ],
+  "templates": [
+    {
+      "id": 1,
+      "name": "Template 1",
+      "layout": "path/to/template1.html"
+    },
+    {
+      "id": 2,
+      "name": "Template 2",
+      "layout": "path/to/template2.html"
+    }
+  ]
+}

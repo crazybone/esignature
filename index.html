@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <!--[if !mso]><!-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!--<![endif]-->
+
+  <!--[if mso]>
+  <style type="text/css">
+    table {border-collapse:collapse;border:0;border-spacing:0;margin:0;}
+    div, td {padding:0;}
+    div {margin:0 !important;}
+  </style>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+  <link rel="stylesheet" href="css/styles.css"> 
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+  </script>
+  <script type="module">
+    import '@material/web/all.js';
+    import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';      
+    document.adoptedStyleSheets.push(typescaleStyles.styleSheet);    
+  </script>
+    
+</head>
+<body style="margin:0;padding:0;word-spacing:normal;background-color:#ffffff;">
+    <div class="main">
+        <!-- Left Column -->
+        <div class="split form-container">
+          <div class="input-content">
+            <form id="signature-form" aria-labelledby="form-description">
+                <!-- <legend id="form-description">Fill out your details to generate a signature</legend> -->
+                <div class="fieldset">
+                    <md-outlined-text-field label="Full Name:" id="fullname" type="text" value=""></md-outlined-text-field>
+                </div>
+                <div class="fieldset">
+                    <md-outlined-text-field label="Nickname (Optional):" id="nickname" type="text" value=""></md-outlined-text-field>
+                </div>
+                <div class="fieldset">
+                    <md-outlined-text-field label="Title:" type="text" id="title" value=""></md-outlined-text-field>
+                </div>
+                <div class="fieldset">
+                    <md-outlined-text-field label="Email:" id="email" type="text" suffix-text="@acommerce.asia"value=""></md-outlined-text-field>
+                    
+                </div>
+                <div class="fieldset phone-num">
+                  <md-outlined-select label="Country" id="ccode" value=""></md-outlined-select>
+                  <md-outlined-text-field label="Phone:" id="phone" type="text" value="" inputmode="numeric" maxlength="10"></md-outlined-text-field>
+
+                  <!-- <md-outlined-text-field label="" id="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value=""></md-outlined-text-field> -->                
+                </div>
+                <div class="fieldset">
+                    <md-outlined-select label="Country:" id="country" value="">
+                    </md-outlined-select>
+                </div>
+                <div class="fieldset">
+                    <md-outlined-select label="Department:" id="department">
+                    </md-outlined-select>
+                </div>
+                <div class="fieldset">
+                    <md-outlined-select label="Logo:" id="clogo">
+                      <!-- <md-select-option value="aCommerce" data-logo-image="https://lh3.googleusercontent.com/d/1T_eDwndO03DZcDjN8ML9tiy_d_TA9Usq">
+                        <div slot="headline">aCommerce</div>
+                      </md-select-option>
+                      <md-select-option value="EcommerceIQ X aCommerce" data-logo-image="https://lh3.googleusercontent.com/d/1T_eDwndO03DZcDjN8ML9tiy_d_TA9Usq" selected>
+                        <div slot="headline">EcommerceIQ X aCommerce</div>
+                      </md-select-option> -->
+                    </md-outlined-select>
+                </div>
+                <!-- 
+                <div class="fieldset">
+                  <md-tabs aria-label="Content to view">
+                    <md-primary-tab id="banner-1col-tab" aria-controls="panel-1col" md-on-select="onTabSelected(1)">
+                      1 column
+                    </md-primary-tab>
+                    <md-primary-tab id="banner-2col-tab" aria-controls="panel-2col" md-on-select="onTabSelected(1)">
+                      2 columns
+                    </md-primary-tab>
+                    <md-primary-tab id="banner-3col-tab" aria-controls="panel-3col" md-on-select="onTabSelected(1)">
+                      3 columns
+                    </md-primary-tab>
+                  </md-tabs>
+                  
+                  <md-content id="panel-1col" class="md-padding" role="tabpanel" aria-labelledby="banner-1col-tab">
+                    <div>Banners for 1 column</div>
+                  </md-content>
+                  <md-content id="panel-2col" class="md-padding" role="tabpanel" aria-labelledby="banner-2col-tab" hidden>
+                    <div>Banners for 2 columns</div>
+                  </md-content>
+                  <md-content id="panel-3col" class="md-padding" role="tabpanel" aria-labelledby="banner-3col-tab" hidden>
+                    <div>Banners for 3 columns</div>
+                  </md-content>
+                </div>
+                -->
+
+                <div class="fieldset">
+                  <md-outlined-select label="Banner:" id="banner">
+                  </md-outlined-select>
+                </div>
+                <!-- <div class="fieldset">
+                    <md-outlined-button type="reset">Reset</md-outlined-button>
+                </div> -->
+            </form>
+          </div>
+        </div>
+        <!-- Preview -->
+        <div class="split email-template" role="article" aria-roledescription="email" lang="en" style="-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;border:0px solid #ddd;" align="center">
+          <div class="email-content">
+            <table role="presentation" style="width:700px;border:0;border-spacing:0;" cellspacing="0" cellpadding="0" border="0" width="100%">
+              <tr>
+                <td style="background-color:transparent;">                  
+                  <div style="margin:0 auto;padding:0 20px;background-color:#95d3ff;border-radius: 6px 6px 0 0;height:55px;">
+                    <p style="margin:0;padding:10px 0">To:&ensp;<span style="color: rgb(54, 96, 131);display: inline-block;background:#ffffff;padding: 10px 15px;border-radius:30px;">Lovely Client</span></p>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="background-color:#95d3ff;border-top:1px solid #ffffff">                 
+                  <div style="margin:0 auto;padding:0 20px;height:40px;">
+                  <p>Subject:&ensp; Hello again from aCommerce</p>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="background-color:#ffffff;" height="200">
+                  <div class="message" style="margin:0 auto;width:90%;color:#a8a8a8"><p> Hi Client,<br><br>Check out this awesome new email signature I created. We are thrill to introduce you to this amazing features. Check out this awesome new email signature I created.<br>Best regards,</p></div>
+                </td>
+              </tr>
+              <tr>
+                <td align="center" style="background-color:#ffffff;">
+                <!--[if mso]>
+                <table role="presentation" align="center" style="width:660px;">
+                <tr>
+                <td style="padding:20px 0;">
+                <![endif]-->
+                <div style="max-width:660px;margin:20px auto;">
+                    <div id="signature-container" style="text-align:center;font-size:0;">
+                        <!--[if mso]>
+                        <table role="presentation" width="100%">
+                        <tr>
+                        <td style="width:50%;padding:10px;" valign="middle">
+                        <![endif]-->
+                        <div style="width:100%;max-width:240px;display:inline-block;vertical-align:middle;;">
+                            <div id="left-content" style="padding:10px;font-size:12px;text-align:left;"></div>
+                        </div>
+                        <!--[if mso]>
+                        </td>
+                        <td style="width:50%;padding:10px;" valign="middle">
+                        <![endif]-->
+                        <div style="width:100%;max-width:420px;display:inline-block;vertical-align:middle;">
+                            <div id="right-content" style="padding:10px;font-size:12px;line-height:18px;text-align:left;"></div>
+                        </div>
+                        <!--[if mso]>
+                        <table role="presentation" width="100%">
+                        <tr>
+                        <td style="width:100%;padding:10px;" valign="middle">
+                        <![endif]-->
+                        <table role="presentation" style="width:100%;border:0;border-spacing:0;" cellspacing="0" cellpadding="0" border="0" width="100%">
+                          <tr>
+                              <td align="center" id="banner-container" class="banner-container">
+                              </td>
+                            </tr>
+                        </table>
+                        <!--[if mso]>
+                        </td>
+                        </tr>
+                        </table>
+                        <![endif]-->
+                    </div>
+                </div>
+                <!--[if mso]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
+                </td>
+              </tr>
+              <tr>
+                <td style="background-color:#ffffff;" height="100">
+                  <br>
+                </td>
+              </tr>
+            </table>
+            <button id="copy-signature" type="submit" aria-label="Copy signature to clipboard">Copy</button>
+          </div> 
+        </div>
+    </div>
+    
+
+    <script src="js/script-04.js"></script>
+</body>
+</html>
