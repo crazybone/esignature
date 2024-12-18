@@ -44,6 +44,7 @@
         <!-- Left Column -->
         <div class="split form-container">
           <div class="input-content">
+            <p style="margin:0 auto 30px;;width:75%; text-align:left;"><img widht="200" src="https://lh3.googleusercontent.com/d/1KNqe0YXGi89CAdUAzWhxPkvA2DKMjo0G" alt="aCommerce"/></p>
             <form id="signature-form" aria-labelledby="form-description">
                 <!-- <legend id="form-description">Fill out your details to generate a signature</legend> -->
                 <div class="fieldset">
@@ -61,7 +62,7 @@
                 </div>
                 <div class="fieldset phone-num">
                   <md-outlined-select label="Country" id="ccode" value=""></md-outlined-select>
-                  <md-outlined-text-field label="Phone:" id="phone" type="text" value="" inputmode="numeric" maxlength="10"></md-outlined-text-field>
+                  <md-outlined-text-field label="Phone:" id="phone" type="text" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" no-spinner="no" value="" maxlength="10"></md-outlined-text-field>
 
                   <!-- <md-outlined-text-field label="" id="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value=""></md-outlined-text-field> -->                
                 </div>
@@ -78,7 +79,7 @@
                   <md-outlined-select label="Banner:" id="banner">
                   </md-outlined-select>
                 </div>
-                
+
                 <div class="fieldset">
                     <md-outlined-select label="Logo:" id="clogo">
                       <!-- <md-select-option value="aCommerce" data-logo-image="https://lh3.googleusercontent.com/d/1T_eDwndO03DZcDjN8ML9tiy_d_TA9Usq">
@@ -114,10 +115,10 @@
                   </md-content>
                 </div>
                 -->
-                <!-- <div class="fieldset">
-                    <md-outlined-button type="reset">Reset</md-outlined-button>
-                </div> -->
             </form>
+            <div class="fieldset request-bt">
+                <md-filled-button id="request" >Request banner</md-filled-button>
+            </div>
           </div>
         </div>
         <!-- Preview -->
@@ -198,8 +199,18 @@
                 </td>
               </tr>
             </table>
-            <button id="copy-signature" type="submit" aria-label="Copy signature to clipboard">Copy</button>
+            <button id="copy-signature" type="submit" aria-label="Copy signature to clipboard">Copy Your Signature</button>
           </div> 
+        </div>
+        <div id="pop_state">
+          <div id="confrm_pop">
+            <h3>Signature Copied!</h3>
+            <p></p>
+            <div id="btn_container">
+              <button id="cancel_btn">Cancel</button>
+              <button id="copy_btn">Go to GMail Setting</button>
+            </div>
+          </div>
         </div>
     </div>
     

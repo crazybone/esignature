@@ -159,8 +159,10 @@ const copyToClipboard = () => {
   }
 };
 
+
 document.getElementById("copy-signature").addEventListener("click", () => {
-  copyToClipboard();
+  //copyToClipboard();
+  confirmPop();
 });
 
 const updateSelectedFlag = (flagCode) => {  
@@ -179,6 +181,45 @@ const classExist = (element) => {
   let current = (element.className).substr(0,4);
   if(current == 'flag') return true;
   return false;
+}
+
+const numOnly = (id) => {
+  // Get the element by id
+  console.log('phone input now!');
+  var element = document.getElementById(id).getElementsByTagName("input");
+  // Use numbers only pattern, from 0 to 9 with \-
+  var regex = /\D/g;
+  // Replace other characters that are not in regex pattern
+  element.value = element.value.replace(regex, "");
+}
+
+const confirmPop = () => {
+  document.getElementById('pop_state').style.display="block";
+  document.getElementById('confrm_pop').style.display="block"; //this is the replace of this line
+
+  document.getElementById('copy_btn').addEventListener("click", () => {
+    copyToClipboard();
+    killPop();
+    deSelectedTx();
+    window.location.href = "https://mail.google.com/mail/u/0/?tab=rm&ogbl#settings/general";
+
+  });
+  document.getElementById('cancel_btn').addEventListener("click", () => {
+    killPop();
+     //return false;
+  });
+}
+const killPop = () => {  
+  document.getElementById('pop_state').style.display="none";
+  document.getElementById('confrm_pop').style.display="none";
+}
+
+const deSelectedTx = () => {
+  const windowSelection = window.getSelection();
+  if (windowSelection) {
+      windowSelection.removeAllRanges();
+  }
+  //document.selection.empty();
 }
 
 /*** Fetch Data ***/
@@ -442,6 +483,10 @@ const updateStorageData = () => {
 const signatureForm = document.getElementById('signature-form');
 document.addEventListener("DOMContentLoaded", () => {
   
+  inpPhone.addEventListener('input', () => {
+    numOnly(this.id);    
+  });
+
   signatureForm.addEventListener("input", () => {    
     updateStorageData();
   });
