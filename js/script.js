@@ -183,15 +183,15 @@ const classExist = (element) => {
   return false;
 }
 
-const numOnly = (id) => {
-  // Get the element by id
-  console.log('phone input now!');
-  var element = document.getElementById(id).getElementsByTagName("input");
-  // Use numbers only pattern, from 0 to 9 with \-
-  var regex = /\D/g;
-  // Replace other characters that are not in regex pattern
-  element.value = element.value.replace(regex, "");
-}
+// const numOnly = (id) => {
+//   // Get the element by id
+//   console.log('phone input now!');
+//   var element = document.getElementById(id).getElementsByTagName("input");
+//   // Use numbers only pattern, from 0 to 9 with \-
+//   var regex = /\D/g;
+//   // Replace other characters that are not in regex pattern
+//   element.value = element.value.replace(regex, "");
+// }
 
 const confirmPop = () => {
   document.getElementById('pop_state').style.display="block";
@@ -220,6 +220,20 @@ const deSelectedTx = () => {
       windowSelection.removeAllRanges();
   }
   //document.selection.empty();
+}
+
+// const restrictInputOnlyNumbers = (val:string) =>  { 
+//   if(val === "") return true 
+//   if(val.length === 6) return false 
+//   return
+// }
+
+const handleChange = (event) => {
+  let inp = event.target.value;
+  consoloe.log('inp: '+inp);
+  if (!inp.match(/[^0-9]/)) {
+    event.preventDefault();
+  }
 }
 
 /*** Fetch Data ***/
@@ -483,8 +497,9 @@ const updateStorageData = () => {
 const signatureForm = document.getElementById('signature-form');
 document.addEventListener("DOMContentLoaded", () => {
   
-  inpPhone.addEventListener('input', () => {
-    numOnly(this.id);    
+  inpPhone.addEventListener('input', (event) => {
+    //numOnly(this.id);
+    handleChange(event);
   });
 
   signatureForm.addEventListener("input", () => {    
