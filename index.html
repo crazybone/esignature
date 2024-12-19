@@ -57,18 +57,14 @@
                     <md-outlined-text-field label="Title:" type="text" id="title" value=""></md-outlined-text-field>
                 </div>
                 <div class="fieldset">
-                    <md-outlined-text-field label="Email:" id="email" type="text" suffix-text="@acommerce.asia"value=""></md-outlined-text-field>
-                    
+                    <md-outlined-text-field label="Email:" id="email" type="text" suffix-text="@acommerce.asia"value=""></md-outlined-text-field>                    
                 </div>
                 <div class="fieldset phone-num">
-                  <md-outlined-select label="Country" id="ccode" value=""></md-outlined-select>
-                  <md-outlined-text-field label="Phone:" id="phone" type="tel" maxlength="10" no-spinner="no"></md-outlined-text-field>
-
-                  <!-- <md-outlined-text-field label="" id="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value=""></md-outlined-text-field> -->                
+                  <md-outlined-select label="Code" id="ccode" value=""></md-outlined-select>
+                  <md-outlined-text-field label="Phone:" id="phone" type="tel" maxlength="10" no-spinner="no"></md-outlined-text-field> 
                 </div>
                 <div class="fieldset">
-                    <md-outlined-select label="Country:" id="country" value="">
-                    </md-outlined-select>
+                    <md-outlined-select label="Logo:" id="clogo"></md-outlined-select>
                 </div>
                 <div class="fieldset">
                     <md-outlined-select label="Department:" id="department">
@@ -78,18 +74,11 @@
                 <div class="fieldset">
                   <md-outlined-select label="Banner:" id="banner">
                   </md-outlined-select>
+                </div>                
+                <div class="fieldset" style="display:none;">
+                    <md-outlined-select label="Country:" id="country" value=""></md-outlined-select>
                 </div>
 
-                <div class="fieldset">
-                    <md-outlined-select label="Logo:" id="clogo">
-                      <!-- <md-select-option value="aCommerce" data-logo-image="https://lh3.googleusercontent.com/d/1T_eDwndO03DZcDjN8ML9tiy_d_TA9Usq">
-                        <div slot="headline">aCommerce</div>
-                      </md-select-option>
-                      <md-select-option value="EcommerceIQ X aCommerce" data-logo-image="https://lh3.googleusercontent.com/d/1T_eDwndO03DZcDjN8ML9tiy_d_TA9Usq" selected>
-                        <div slot="headline">EcommerceIQ X aCommerce</div>
-                      </md-select-option> -->
-                    </md-outlined-select>
-                </div>
                 <!-- 
                 <div class="fieldset">
                   <md-tabs aria-label="Content to view">
@@ -117,7 +106,8 @@
                 -->
             </form>
             <div class="fieldset request-bt">
-                <md-filled-button id="request" >Request banner</md-filled-button>
+                <!-- <md-filled-button id="request" >Request banner</md-filled-button> -->
+                 <p style="color:#a8a8a8">If you need to have the banner for your Department within your signature. <br>just sent email to <a style="color:#2f5573;text-decoration:none" href="mailto:someone@acommerce.asia">someone@acommerce.asia</a></p>
             </div>
           </div>
         </div>
@@ -141,7 +131,7 @@
               </tr>
               <tr>
                 <td style="background-color:#ffffff;" height="200">
-                  <div class="message" style="margin:0 auto;width:90%;color:#a8a8a8"><p> Hi Client,<br><br>Check out this awesome new email signature I created. We are thrill to introduce you to this amazing features. Check out this awesome new email signature I created.<br>Best regards,</p></div>
+                  <div class="message" style="margin:0 auto;width:90%;color:#a8a8a8"><p> Hi Client,<br><br>Check out this awesome new email signature I created. We are thrill to introduce you to this amazing features. Check out this awesome new email signature I created.<br><br>Best regards,</p></div>
                 </td>
               </tr>
               <tr>
@@ -151,21 +141,21 @@
                 <tr>
                 <td style="padding:20px 0;">
                 <![endif]-->
-                <div style="max-width:660px;margin:20px auto;">
+                <div style="max-width:660px;margin:0 auto 20px;">
                     <div id="signature-container" style="text-align:center;font-size:0;">
                         <!--[if mso]>
                         <table role="presentation" width="100%">
                         <tr>
-                        <td style="width:50%;padding:10px;" valign="middle">
+                        <td style="width:100%;padding:10px;" valign="middle">
                         <![endif]-->
-                        <div style="width:100%;max-width:240px;display:inline-block;vertical-align:middle;;">
+                        <div style="width:100%;max-width:240px;display:block;vertical-align:middle;;">
                             <div id="left-content" style="padding:10px;font-size:12px;text-align:left;"></div>
                         </div>
                         <!--[if mso]>
-                        </td>
-                        <td style="width:50%;padding:10px;" valign="middle">
+                        </td></tr><tr>
+                        <td style="width:50%;padding:10px;" valign="middle"></tr>
                         <![endif]-->
-                        <div style="width:100%;max-width:420px;display:inline-block;vertical-align:middle;">
+                        <div style="width:100%;max-width:420px;display:block;vertical-align:middle;">
                             <div id="right-content" style="padding:10px;font-size:12px;line-height:18px;text-align:left;"></div>
                         </div>
                         <!--[if mso]>

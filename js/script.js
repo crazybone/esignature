@@ -36,7 +36,6 @@ const populateCountry = (arr, idx) => {
   var countryInline = "";
   for(var i = 0; i < arr.length; i++) {
     if(i==(idx-1)) {
-      //console.log("i: " + i);
       if(i < (arr.length - 1)) {
           countryInline += "<b style='color:#505050;'>"+arr[i]+"</b>&nbsp;&nbsp;|&nbsp;&nbsp;";
       } else {
@@ -86,7 +85,6 @@ const updatePreview = (popCountryLine) => {
     countryTx = popCountryLine;
     if(addressList && idxCountry) {
       addressTx = addressList[idxCountry - 1];
-      //console.log(' addressTx: '+addressTx+' idxCountry: '+idxCountry);
     }
   }
 
@@ -94,10 +92,6 @@ const updatePreview = (popCountryLine) => {
   phoneData = formatPhoneNumber();
 
   if( departmentSelect.value != '' && bannerSelect.value != '') {
-    console.log('departmentSelect: '+departmentSelect.value+' bannerSelect: '+bannerSelect.value);
-    //let getBannerData = getBanner2(departmentSelect.value, bannerSelect.value);
-    //console.log('getBannerData: '+getBannerData);
-    //bannerContentTemplate = updateBannerView(sectionBanner); 
     bannerContentTemplate = getBanner2(departmentSelect.value, bannerSelect.value);
   }
 
@@ -110,17 +104,11 @@ const updatePreview = (popCountryLine) => {
   }
 
   if(logoList.selectedIndex > 0) {
-  //if(logoCont != '') {
     let cLogo = getLogo(logoList.selectedIndex);
-    //console.log('cLogo: '+cLogo);
-    //logoCont = updateLogoView(cLogo);
-    //console.log('logoCont: '+logoCont);
     upateRightView(countryTx, addressTx, cLogo);
   }
   
-  const leftContentTemplate = `<table role="presentation" width="100%" style="
-    border-right: 1px dotted #cfcfcf;
-"><tr><td style="padding:0 10px;" valign="middle"><p class="sender-name" style="margin:0;margin-top:8px;font-weight:bold;line-height:18px;color:#505050;">${fName}</p><p class="sender-title" style="margin:0;font-weight:400;line-height:18px;color:#909090;">${formData.title}</p></td></tr><tr><td style="padding:0 10px;" valign="middle"><p class="sender-email" style="margin:0;margin-top:8px;font-weight:400;line-height:18px;color:#909090;">E: <a style="text-decoration:none;color:#909090;" class="mailto" href="mailto:${emailSender}">${emailSender}</a></p><p class="sender-phone" style="margin:0;font-weight:400;line-height:18px;color:#909090;">M: ${phoneData}</p></td></tr></table>`;
+  const leftContentTemplate = `<table role="presentation" width="100%"><tr><td style="padding:0 10px;" valign="middle"><p class="sender-name" style="margin:0;margin-top:8px;font-weight:bold;line-height:18px;color:#505050;">${fName}</p><p class="sender-title" style="margin:0;font-weight:400;line-height:18px;color:#909090;">${formData.title}</p></td></tr><tr><td style="padding:0 10px;" valign="middle"><p class="sender-email" style="margin:0;margin-top:8px;font-weight:400;line-height:18px;color:#909090;">E: <a style="text-decoration:none;color:#909090;" class="mailto" href="mailto:${emailSender}">${emailSender}</a></p><p class="sender-phone" style="margin:0;font-weight:400;line-height:18px;color:#909090;">M: ${phoneData}</p></td></tr></table>`;
 
   const rightContentTemplate = `<table role="presentation" width="100%"><tr><td style="width:50%;padding:0 10px;" valign="middle">${logoCont}</td><td style="width:50%;padding:0 10px;"><ul style="list-style:none;margin:15px 0 0 0;padding:0;display:inline-block;float:right;">
   
@@ -218,12 +206,6 @@ const deSelectedTx = () => {
   //document.selection.empty();
 }
 
-// const restrictInputOnlyNumbers = (val:string) =>  { 
-//   if(val === "") return true 
-//   if(val.length === 6) return false 
-//   return
-// }
-
 const handleChange = (event) => {
   let elm = event.target.nodeName;
   let inp = event.target.value;
@@ -261,16 +243,18 @@ fetch('data.json')
     cOption.value = country.code;
     span.textContent = "+"+country.code;
     cOption.appendChild(span);
+    countryDropdown.selectedIndex = 0;
+    countryCodeDropdown.selectedIndex = 0;
     countryDropdown.appendChild(option);
     countryCodeDropdown.appendChild(cOption);
+    
   });
 
   countryDropdown.addEventListener('change', () => {
     const selectedCountryId = countryDropdown.value;
     const selectedCountry = data.countries.find(
-      country => country.id === selectedCountryId
+      country => country.id == selectedCountryId
     );
-    //updateSelectedFlag(countrySelect, );
     
     updateSelectedFlag(selectedCountry.code);
     let tmp = selectedCountry.code;
@@ -279,13 +263,13 @@ fetch('data.json')
       idxCountry = selectedCountryId;
       popCountryLine = populateCountry(arrCountry, idxCountry);
     }
-    updatePreview(popCountryLine);
+    //updatePreview(popCountryLine);
   });
   
   countryCodeDropdown.addEventListener('change', () => {
     const selectedCountryCodeId = countryCodeDropdown.value;
     const selectedCountryCode = data.countries.find(
-      country => country.code === selectedCountryCodeId
+      country => country.code == selectedCountryCodeId
     );
     updateSelectedFlag(selectedCountryCode.code);    
     let tmp = selectedCountryCode.id;
@@ -293,6 +277,7 @@ fetch('data.json')
     idxCountry = tmp;
     popCountryLine = populateCountry(arrCountry, idxCountry);    
     updatePreview(popCountryLine);
+    updateStorageData();
   });
 
   /*** Populate the department dropdown ***/
@@ -300,6 +285,7 @@ fetch('data.json')
     const option = document.createElement('md-select-option');
     option.value = department.id;
     option.textContent = department.name;
+    //departmentDropdown.selectedIndex = 0;
     departmentDropdown.appendChild(option);
   });
 
@@ -333,7 +319,6 @@ fetch('data.json')
         const selectedDepartment = data.departments.find(dept => dept.id == selectedDeptId);
         const selectedSection = selectedDepartment.sections.find(section => section.id == selectedSectionId);
         if (selectedSection && selectedSection.banner.length > 0) {
-          //console.log("selectedSection: " + selectedSection.banner[0] + " selectedSectionId: " + selectedSectionId);          
           sectionBanner = selectedSection.banner[0];
         }
     }
@@ -357,7 +342,6 @@ fetch('data.json')
     let imageLogo = '';
     if(selectedLogoImg) {
       imageLogo = selectedLogoImg.image;
-      console.log('from logo dropdown: '+selectedLogoImg.image+' id: '+selectedLogoImg.id);
     }
     logoCont = updateLogoView(imageLogo); 
     updatePreview(popCountryLine);
@@ -391,7 +375,6 @@ const getBanner = (deptId, sectId) => {
     const dataDept = mainData.departments.find(dept => dept.id == deptId);
     const dataSect = dataDept.sections.find(section => section.id == sectId);
     if (dataSect && dataSect.banner.length > 0) {
-      console.log("image banner: " + dataSect.banner[0]+" banner Url: " + dataSect.link[0] );
       let imageUrl = dataSect.banner[0];
       return imageUrl;
     }
@@ -404,14 +387,12 @@ const getBanner2 = (deptId, sectId) => {
     const dataDept = mainData.departments.find(dept => dept.id == deptId);
     const dataSect = dataDept.sections.find(section => section.id == sectId);
     if (dataSect && dataSect.banner.length > 0) {
-      console.log("getBanner2 function > image banner: " + dataSect.banner+" banner Url: "+dataSect.link);
+      //console.log("getBanner2 function > image banner: " + dataSect.banner+" banner Url: "+dataSect.link);
       imageBanner = dataSect.banner[0];
       bannerUrl = dataSect.link[0];
       if(imageBanner != '' && bannerUrl != '') {
         bannerTemplate = `<div class="img-container" style="display:block;width:100%;max-width:640px;height:100%;"><a href="${bannerUrl}"><img src="${imageBanner}" width="100%" alt=""/></a></div>`;
       }
-
-      //console.log('bannerTemplate: '+bannerTemplate);
       return bannerTemplate;
     }
   }
@@ -448,7 +429,7 @@ const upateRightView = (cntryTx, addrTx, logoImg) => {
 }
 
 const updateBannerView = (bannerData,bannerLink) => {  
-  console.log('bannerData: '+bannerData);
+  //console.log('bannerData: '+bannerData);
   let bannerTmp = '';
   if(bannerData) bannerTmp = '<div class="img-container" style="display:block;width:100%;max-width:640px;height:100%;"><a href="'+bannerLink+'"><img src="'+bannerData+'" width="100%" alt=""/></a></div>'; 
   return bannerTmp
@@ -527,7 +508,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSelectedFlag(codeClass);
     upateRightView(cntryTx, addrTx, savedData.logoimage);
     popCountryLine = populateCountry(arrCountry, cntryIx+1);
-    console.log('popCountryLine: '+popCountryLine);
     updatePreview(popCountryLine); 
     updateBannerList(savedData.department);
     bannerContent.innerHTML = updateBannerView(savedData.bannerimage);

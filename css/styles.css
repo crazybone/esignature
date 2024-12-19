@@ -60,7 +60,7 @@ h1 {
   left: 0;
 }
 .form-container .input-content {
-  margin-top: 20%;
+  margin-top: 14%;
 }
 .form-container .input-content img {
   width: 45%;
@@ -554,7 +554,7 @@ md-outlined-select[id*='ccode'] md-select-option > .flag66::before {
 }
 
 .request-bt {
-  margin: 50px auto 0;
+  margin: 20px auto 0;
   width: 75%;
   text-align: left;
 }
