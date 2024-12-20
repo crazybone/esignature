@@ -408,7 +408,7 @@ const getLogo = (logoId) => {
   if(logoId){
     const dataLogo = mainData.logo.find(logo => logo.id == logoId);
     if(dataLogo) {
-      console.log('getLogo function: '+dataLogo.image);    
+      //console.log('getLogo function: '+dataLogo.image);    
       let logoImageUrl = dataLogo.image;
       return logoImageUrl;
     }
@@ -467,7 +467,7 @@ const updateStorageData = () => {
       banner: bannerSelect.value,
       countryid: countrySelect.selectedIndex+1,
       countryname: countrySelect.value,
-      bannerimage: dataImg,
+      bannerimage: "https://lh3.googleusercontent.com/d/1b1JpolzRPdcxTlYNd7VKte0OJ0xwQvkd",
       bannerlink: "https://www.acommerce.asia/",
       address: addressTx,
       logoid: logoList.value,
