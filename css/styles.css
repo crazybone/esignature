@@ -626,6 +626,22 @@ md-filled-button[id*='request'] {
   background-color: #ffffff;
   cursor: pointer;
 }
+.remark {
+  position: relative;
+  color: #a8a8a8;
+  line-height: 1.5;
+}
+.remark:before {
+  content: '*';
+  position: absolute;
+  top: 0;
+  left: -8px;
+  color:#a8a8a8;
+}
+.remark a {
+  color:#2f5573;
+  text-decoration:none
+}
 
 /* Responsive Design */
 @media only screen and (max-width: 420px) {

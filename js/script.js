@@ -19,17 +19,17 @@ const emailDomain = '@acommerce.asia';
 
 const formFields = ["fullname", "nickname", "title", "email", "ccode", "phone","department", "banner", "countryid", "countryname", "address", "logo"];
 var addressList = [], arrCountry = [];
-var sectionBanner = '', popCountryLine = '', idxCountry = 0, bannerImg = '';
+var sectionBanner = '', popCountryLine = '', idxCountry = 0, bannerImg = '', bannerLink = '';
 let countryTx = 'No country selected';
-let addressTx = '';
+let addressTx = "33rd Floor, 689 Bhiraj Tower Sukhumvit Rd, Bangkok 10110";
 let logoSelected = '';
 
 document.body.onload = () => {
-  //updateStorageData();
+  inpCode.classList.add('flag66');
 }
 
 document.getElementById("signature-form").addEventListener("input", () => {
-  updatePreview(popCountryLine);
+  updatePreview();
 }); 
 
 const populateCountry = (arr, idx) => {
@@ -70,8 +70,8 @@ const formatPhoneNumber = () => {
 /*** Update signature preview ***/
 let bannerContentTemplate = '';
 let logoCont = '';
-const updatePreview = (popCountryLine) => {
 
+const updatePreview = () => {
   const formData = formFields.reduce((data, field) => {
     data[field] = document.getElementById(field)?.value || "";
     return data;
@@ -81,20 +81,20 @@ const updatePreview = (popCountryLine) => {
   let nName = formData.nickname;
   let emailSender = formData.email+emailDomain;
 
-  if(popCountryLine !== '') {
-    countryTx = popCountryLine;
-    if(addressList && idxCountry) {
+  countryTx = populateCountry(arrCountry, idxCountry);
+  
+  if(addressList && idxCountry) {
       addressTx = addressList[idxCountry - 1];
-    }
   }
 
   if(nName != '') fName += ' ('+nName+')';
   phoneData = formatPhoneNumber();
 
   if( departmentSelect.value != '' && bannerSelect.value != '') {
-    bannerContentTemplate = getBanner2(departmentSelect.value, bannerSelect.value);
+    bannerContentTemplate = getBanner(departmentSelect.value, bannerSelect.value);
   }
 
+    /*
   if(sectionBanner !== '') {
     bannerContentTemplate = `<div class="img-container one-column" style="display:block;width:100%;max-width:640px;height:100%;"><a href="#"><img src="${sectionBanner}" width="100%" alt=""/></a></div>`;
     
@@ -102,26 +102,26 @@ const updatePreview = (popCountryLine) => {
   } else {
     bannerContentTemplate = '';
   }
+    */
+  
+  let cLogo = getLogo(logoList.value);
+  let rCont = updateRightContent(countryTx, addressTx, cLogo);
+  let rightContentTemplate = '';
 
-  if(logoList.selectedIndex > 0) {
-    let cLogo = getLogo(logoList.selectedIndex);
-    upateRightView(countryTx, addressTx, cLogo);
+
+  if(rCont != ''){
+    rightContentTemplate = rCont;
+    //console.log('updatePreview > rCont: '+rightContentTemplate);
   }
-  
-  const leftContentTemplate = `<table role="presentation" width="100%"><tr><td style="padding:0 10px;" valign="middle"><p class="sender-name" style="margin:0;margin-top:8px;font-weight:bold;line-height:18px;color:#505050;">${fName}</p><p class="sender-title" style="margin:0;font-weight:400;line-height:18px;color:#909090;">${formData.title}</p></td></tr><tr><td style="padding:0 10px;" valign="middle"><p class="sender-email" style="margin:0;margin-top:8px;font-weight:400;line-height:18px;color:#909090;">E: <a style="text-decoration:none;color:#909090;" class="mailto" href="mailto:${emailSender}">${emailSender}</a></p><p class="sender-phone" style="margin:0;font-weight:400;line-height:18px;color:#909090;">M: ${phoneData}</p></td></tr></table>`;
 
-  const rightContentTemplate = `<table role="presentation" width="100%"><tr><td style="width:50%;padding:0 10px;" valign="middle">${logoCont}</td><td style="width:50%;padding:0 10px;"><ul style="list-style:none;margin:15px 0 0 0;padding:0;display:inline-block;float:right;">
-  
-  <li class="social-icon" style="display:inline-block;width:25px;"><a href="https://www.facebook.com/acommerce.asia/"><img src="https://lh3.googleusercontent.com/d/1CG__yxnVK7nIwsdGCueTTGO39PZWu3AW" alt="Facebook" width="20" class="sender-fb"/></a></li>
-  
-  <!-- <li class="social-icon" style="display:inline-block;width:25px;"><a href="https://www.youtube.com/channel/UC_DM4P6tgBNhXQZDXSMrMVg"><img src="https://lh3.googleusercontent.com/d/1xVfgtnJKk51PPmwlFGlW44xUNP1gCYBF" alt="Youtube" width="20" class="sender-fb"/></a></li> -->
-  
-  <li class="social-icon" style="display:inline-block;width:25px;"><a href="https://www.linkedin.com/company/acommerce/"><img src="https://lh3.googleusercontent.com/d/14sHVcrwreh-6-TCge2J5tyt-g6AtFP6E" alt="LinkedIn" width="20" class="sender-fb"/></a></li>
+  let leftContentTemplate = `<table role="presentation" width="100%"><tr><td style="padding:0 10px;" valign="middle"><p class="sender-name" style="margin:0;margin-top:8px;font-weight:bold;line-height:18px;color:#505050;">${fName}</p><p class="sender-title" style="margin:0;font-weight:400;line-height:18px;color:#909090;">${formData.title}</p></td></tr><tr><td style="padding:0 10px;" valign="middle"><p class="sender-email" style="margin:0;margin-top:8px;font-weight:400;line-height:18px;color:#909090;">E: <a style="text-decoration:none;color:#909090;" class="mailto" href="mailto:${emailSender}">${emailSender}</a></p><p class="sender-phone" style="margin:0;font-weight:400;line-height:18px;color:#909090;">M: ${phoneData}</p></td></tr></table>`;
 
-  </ul></td></tr><tr><td colspan="2" style="width:100%;padding:0 10px;"> <p class="sender-address" style="margin:0 0 5px;padding:0;display:block;font-weight:400;line-height:18px;color:#909090;">A: ${addressTx}</p><p style="margin:0;font-weight:400;line-height:18px;color:#909090;" id="country-list">${countryTx}</p></td></tr></table>`;  
+  //console.log('rightContentTemplate: '+rightContentTemplate);
 
   leftContent.innerHTML = leftContentTemplate;
+
   rightContent.innerHTML = rightContentTemplate;
+
   if(bannerContentTemplate !== '') bannerContent.innerHTML = bannerContentTemplate;
 }
 
@@ -146,7 +146,6 @@ const copyToClipboard = () => {
       console.log("Fail: "+err);
   }
 };
-
 
 document.getElementById("copy-signature").addEventListener("click", () => {
   //copyToClipboard();
@@ -206,14 +205,6 @@ const deSelectedTx = () => {
   //document.selection.empty();
 }
 
-const handleChange = (event) => {
-  let elm = event.target.nodeName;
-  let inp = event.target.value;
-  if (inp.match(/[^0-9]/)) {
-    event.preventDefault();
-  }
-}
-
 /*** Fetch Data ***/
 var mainData;
 fetch('data.json')
@@ -246,8 +237,7 @@ fetch('data.json')
     countryDropdown.selectedIndex = 0;
     countryCodeDropdown.selectedIndex = 0;
     countryDropdown.appendChild(option);
-    countryCodeDropdown.appendChild(cOption);
-    
+    countryCodeDropdown.appendChild(cOption);    
   });
 
   countryDropdown.addEventListener('change', () => {
@@ -261,9 +251,9 @@ fetch('data.json')
     countryCodeDropdown.value = tmp;
     if(selectedCountryId && arrCountry.length) {
       idxCountry = selectedCountryId;
-      popCountryLine = populateCountry(arrCountry, idxCountry);
+      //popCountryLine = populateCountry(arrCountry, idxCountry);
     }
-    //updatePreview(popCountryLine);
+    //updatePreview();
   });
   
   countryCodeDropdown.addEventListener('change', () => {
@@ -276,7 +266,7 @@ fetch('data.json')
     countryDropdown.value = tmp;
     idxCountry = tmp;
     popCountryLine = populateCountry(arrCountry, idxCountry);    
-    updatePreview(popCountryLine);
+    updatePreview();
     updateStorageData();
   });
 
@@ -285,7 +275,7 @@ fetch('data.json')
     const option = document.createElement('md-select-option');
     option.value = department.id;
     option.textContent = department.name;
-    //departmentDropdown.selectedIndex = 0;
+    departmentDropdown.selectedIndex = 0;
     departmentDropdown.appendChild(option);
   });
 
@@ -303,10 +293,23 @@ fetch('data.json')
         const option = document.createElement('md-select-option');
         option.value = dep;
         option.textContent = section.name;
-        option.setAttribute('data-banner', section.banner);
         bannerDropdown.appendChild(option);
+        //bannerDropdown.selectedIndex = 0;
       });
-      bannerDropdown.disabled = false;
+
+      let deptId = selectedDepartment.id;
+      if(deptId > 1) {
+        console.log('selectedDepartment id: '+deptId);
+
+        logoList.disabled = false;
+        bannerDropdown.disabled = false;
+      } else {
+        console.log('selectedDepartment id: '+deptId);
+        logoList.selectedIndex = 0;
+        logoList.disabled = true;
+        bannerDropdown.selectedIndex = 0;
+        bannerDropdown.disabled = true;
+      }
     }
   });
 
@@ -318,22 +321,25 @@ fetch('data.json')
     if (selectedDeptId && selectedSectionId) {
         const selectedDepartment = data.departments.find(dept => dept.id == selectedDeptId);
         const selectedSection = selectedDepartment.sections.find(section => section.id == selectedSectionId);
-        if (selectedSection && selectedSection.banner.length > 0) {
-          sectionBanner = selectedSection.banner[0];
+        if (selectedSection.banner.length > 0) {
+          sectionBanner = selectedSection.banner;
         }
     }
-    updatePreview(popCountryLine);
+    updatePreview();
   });
 
-  /*** Populate the department dropdown ***/
-  data.logo.forEach(logo => {
-    const option = document.createElement('md-select-option');
-    option.value = logo.id;
-    option.textContent = logo.name;
-    logoList.appendChild(option);
-  });
+  /*** gen logo dropdown ***/
+  if(data.logo.length) {
+    data.logo.forEach(logo => {
+      const option = document.createElement('md-select-option');
+      option.value = logo.id;
+      option.textContent = logo.name;
+      logoList.selectedIndex = 0;
+      logoList.appendChild(option);
+    });
+  }
 
-  /*** Populate the Logo dropdown ***/
+  /*** Logo dropdown event ***/
   logoList.addEventListener('change', () => {
     const selectedLogoId = logoList.value;
     const selectedLogoImg = data.logo.find(
@@ -344,51 +350,51 @@ fetch('data.json')
       imageLogo = selectedLogoImg.image;
     }
     logoCont = updateLogoView(imageLogo); 
-    updatePreview(popCountryLine);
+    updatePreview();
   });
 })
 .catch(error => console.error('Error loading JSON:', error));
 
 
-const updateBannerList = (deptId) => { //, sectId
+const updateBannerList = (deptId) => { 
   const departmentId = deptId;
-  const departmentData = mainData.departments.find(
-    department => department.id === departmentId
-  );
 
-  if (departmentData) {
-    let dep = 0;
-    departmentData.sections.forEach(section => {
-      dep++;
-      const option = document.createElement('md-select-option');
-      option.value = dep;
-      option.textContent = section.name;
-      option.setAttribute('data-banner', section.banner);
-      bannerSelect.appendChild(option);
-    });
+  //console.log('updateBannerList > deptId: '+deptId);
+
+  let departmentData;
+  if(mainData) {
+    departmentData  = mainData.departments.find(
+      department => department.id == departmentId
+    );
+
+    if (departmentData) {
+      let dep = 0;
+      departmentData.sections.forEach(section => {
+        dep++;
+        const option = document.createElement('md-select-option');
+        option.value = dep;
+        option.textContent = section.name;
+        //option.setAttribute('data-banner', section.banner);
+        bannerSelect.appendChild(option);
+      });
+      //bannerSelect.selectedIndex = 0;
+    }
+    //let deptId = departmentData.id
+    //if(deptId > 1) console.log('departmentData.id: '+deptId);
+    
     bannerSelect.value = departmentId;
   }
 }
 
 const getBanner = (deptId, sectId) => {
-  if(mainData && deptId && sectId) {
-    const dataDept = mainData.departments.find(dept => dept.id == deptId);
-    const dataSect = dataDept.sections.find(section => section.id == sectId);
-    if (dataSect && dataSect.banner.length > 0) {
-      let imageUrl = dataSect.banner[0];
-      return imageUrl;
-    }
-  }
-}
-
-const getBanner2 = (deptId, sectId) => {
   let imageBanner, bannerUrl, bannerTemplate;
   if(mainData && deptId && sectId) {
     const dataDept = mainData.departments.find(dept => dept.id == deptId);
     const dataSect = dataDept.sections.find(section => section.id == sectId);
     if (dataSect && dataSect.banner.length > 0) {
-      //console.log("getBanner2 function > image banner: " + dataSect.banner+" banner Url: "+dataSect.link);
-      imageBanner = dataSect.banner[0];
+      //console.log("getBanner image banner: " + dataSect.banner+" banner Url: "+dataSect.link);
+      //bannerImg = dataSect.banner[0];
+      imageBanner = bannerImg = dataSect.banner[0];
       bannerUrl = dataSect.link[0];
       if(imageBanner != '' && bannerUrl != '') {
         bannerTemplate = `<div class="img-container" style="display:block;width:100%;max-width:640px;height:100%;"><a href="${bannerUrl}"><img src="${imageBanner}" width="100%" alt=""/></a></div>`;
@@ -402,7 +408,7 @@ const getLogo = (logoId) => {
   if(logoId){
     const dataLogo = mainData.logo.find(logo => logo.id == logoId);
     if(dataLogo) {
-      //console.log('getLogo function: '+dataLogo.image);    
+      console.log('getLogo function: '+dataLogo.image);    
       let logoImageUrl = dataLogo.image;
       return logoImageUrl;
     }
@@ -411,21 +417,23 @@ const getLogo = (logoId) => {
     }
   }
 }
-//const upateleftView = () => {}
 
-const upateRightView = (cntryTx, addrTx, logoImg) => {
-  let logoSrc = updateLogoView(logoImg); 
-  let rightTemplate = `<table role="presentation" width="100%"><tr><td style="width:50%;padding:0 10px;" valign="middle">${logoSrc}</td><td style="width:50%;padding:0 10px;"><ul style="list-style:none;margin:15px 0 0 0;padding:0;display:inline-block;float:right;">
+const updateRightContent = (cntryTx, addrTx, logoImg) => {
+  let logoSrc = '';
+  if(logoImg != '') {
+    logoSrc = updateLogoView(logoImg); 
+  } 
   
-  <li class="social-icon" style="display:inline-block;width:25px;"><a href="https://www.facebook.com/acommerce.asia/"><img src="https://lh3.googleusercontent.com/d/1CG__yxnVK7nIwsdGCueTTGO39PZWu3AW" alt="Facebook" width="20" class="sender-fb"/></a></li>
-  
-  <!-- <li class="social-icon" style="display:inline-block;width:25px;"><a href="https://www.youtube.com/channel/UC_DM4P6tgBNhXQZDXSMrMVg"><img src="https://lh3.googleusercontent.com/d/1xVfgtnJKk51PPmwlFGlW44xUNP1gCYBF" alt="Youtube" width="20" class="sender-fb"/></a></li> -->
-  
-  <li class="social-icon" style="display:inline-block;width:25px;"><a href="https://www.linkedin.com/company/acommerce/"><img src="https://lh3.googleusercontent.com/d/14sHVcrwreh-6-TCge2J5tyt-g6AtFP6E" alt="LinkedIn" width="20" class="sender-fb"/></a></li>
+  let rightTemplate = '';
 
-  </ul></td></tr><tr><td colspan="2" style="width:100%;padding:0 10px;"> <p class="sender-address" style="margin:0 0 5px;padding:0;display:block;font-weight:400;line-height:18px;color:#909090;">A: ${addrTx}</p><p style="margin:0;font-weight:400;line-height:18px;color:#909090;" id="country-list">${cntryTx}</p></td></tr></table>`; 
-  
-  rightContent.innerHTML = rightTemplate;
+  if(logoSrc != '') {
+    //let theRight = document.getElementById("right-content");
+    rightTemplate = '<table role="presentation" width="100%"><tr><td style="width:50%;padding:0 10px;" valign="middle">'+logoSrc+'</td><td style="width:50%;padding:0 10px;"><ul style="list-style:none;margin:0;padding:0;display:inline-block;float:right;"><li class="social-icon" style="display:inline-block;width:25px;"><a href="https://www.facebook.com/acommerce.asia/"><img src="https://lh3.googleusercontent.com/d/1CG__yxnVK7nIwsdGCueTTGO39PZWu3AW" alt="Facebook" width="20" class="sender-fb"/></a></li><li class="social-icon" style="display:inline-block;width:25px;"><a href="https://www.linkedin.com/company/acommerce/"><img src="https://lh3.googleusercontent.com/d/14sHVcrwreh-6-TCge2J5tyt-g6AtFP6E" alt="LinkedIn" width="20" class="sender-fb"/></a></li></ul></td></tr><tr><td colspan="2" style="width:100%;padding:0 10px;"> <p class="sender-address" style="margin:0 0 5px;padding:0;display:block;font-weight:400;line-height:18px;color:#909090;">A: '+addrTx+'</p><p style="margin:0;font-weight:400;line-height:18px;color:#909090;" id="country-list">'+cntryTx+'</p></td></tr></table>'; 
+    
+    //console.log('rightTemplate: '+rightTemplate);
+    //theRight.innerHTML = rightTemplate;
+    return rightTemplate;
+  }
 }
 
 const updateBannerView = (bannerData,bannerLink) => {  
@@ -437,20 +445,16 @@ const updateBannerView = (bannerData,bannerLink) => {
 
 const updateLogoView = (logoUrl) => {
   let logoTmp = '';
+  //console.log('updateLogoView > param logoUrl: '+logoUrl);
   if(logoUrl != '') {
-    logoTmp = '<div style="display:block;width:100%;height:100%;"><a href="#" style="display:block;"><img src="'+logoUrl+'" width="200" alt=""/></a></div>';
+    logoTmp = '<div style="display:block;width:100%;height:100%;"><a href="https://www.acommerce.asia/" target="_blank" style="display:block;"><img src="'+logoUrl+'" width="200" alt="aCommerce"/></a></div>';
   }
-  return logoTmp
+  return logoTmp;
 }
 
 const updateStorageData = () => {
-  let dataDept = departmentSelect.value;
-  let dataBanner = bannerSelect.value;
-  let dataImg = '';
-   
-  if(dataDept != '' && dataBanner != '') {
-    dataImg = getBanner(dataDept, dataBanner);
-  }
+  let dataImg = bannerImg;
+  console.log('dataImg: '+dataImg);
 
   const data = {
       fullname: fullName.value,
@@ -464,6 +468,7 @@ const updateStorageData = () => {
       countryid: countrySelect.selectedIndex+1,
       countryname: countrySelect.value,
       bannerimage: dataImg,
+      bannerlink: "https://www.acommerce.asia/",
       address: addressTx,
       logoid: logoList.value,
       logoimage: getLogo(logoList.value)
@@ -472,6 +477,64 @@ const updateStorageData = () => {
 }
 
 const signatureForm = document.getElementById('signature-form');
+
+
+const renderForm = () => {
+  const getData = JSON.parse(localStorage.getItem("fData"));
+  if(getData) {
+    let codeClass = "66";
+
+    if(getData.ccode != '') {
+      codeClass = getData.ccode;
+    }      
+    
+    addressTx = getData.address || "";
+    countryTx = getData.countryname || "";
+
+    fullName.value = getData.fullname || "";
+    nickName.value = getData.nickname || "";
+    titleName.value = getData.title || "";
+    eAddress.value = getData.email || "";
+
+    if(getData.ccode != '') {
+      let currentClass = inpCode.className;
+      if(classExist(inpCode)) {
+        inpCode.classList.remove(currentClass);
+        inpCode.classList.add('flag'+getData.ccode);
+      } 
+      inpCode.value = getData.ccode;
+    } else {
+      inpCode.value = codeClass;
+      inpCode.classList.add('flag66');
+    }
+    inpPhone.value = getData.phone || "";
+    departmentSelect.value = getData.department || "";
+    bannerSelect.value = getData.banner || "";
+    countrySelect.value = getData.countryname || "";  
+    countrySelect.selectedIndex = parseInt(getData.countryid)-1;  
+    inpCode.selectedIndex = parseInt(getData.countryid)-1;  
+    if(getData.department > 1) {
+      //logoList.selectedIndex = 0;
+      logoList.disabled = false;
+      //bannerDropdown.selectedIndex = 0;
+      bannerSelect.disabled = false;
+    }
+    
+    if(getData.logoid != '') {
+      logoList.selectedIndex = getData.ccode;
+    } else {
+      logoList.selectedIndex = 1;
+    }
+    updateBannerList(getData.department);    
+    updateSelectedFlag(codeClass);  
+    //bannerContent.innerHTML = getBanner(); 
+    //bannerContent.innerHTML = updateBannerView(getData.bannerimage);
+  } else {   
+    updateBannerList(1);  
+  }
+  //console.log('addressList: '+addressList);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   
   inpPhone.addEventListener('keydown', (event) => {
@@ -482,35 +545,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateStorageData();
   });
 
-  const savedData = JSON.parse(localStorage.getItem("fData"));
-
-  if(savedData) {
-    let codeClass = savedData.ccode || "";
-    let addrTx = savedData.address || "";
-    let cntryTx = savedData.countryname || "";
-    let cntryIx = parseInt(savedData.countryid)-1;
-    let logoImg = updateLogoView(savedData.logo);
-
-    fullName.value = savedData.fullname || "";
-    nickName.value = savedData.nickname || "";
-    titleName.value = savedData.title || "";
-    eAddress.value = savedData.email || "";
-    inpCode.value = savedData.ccode || "";
-    inpPhone.value = savedData.phone || "";
-    departmentSelect.value = savedData.department || "";
-    bannerSelect.value = savedData.banner || "";
-    countrySelect.value = savedData.countryname || "";    
-    countrySelect.selectedIndex = cntryIx;
-    addressTx = addrTx;
-    countryTx = savedData.countryname || "";
-    logoList.value = savedData.logoid || "";
-    
-    updateSelectedFlag(codeClass);
-    upateRightView(cntryTx, addrTx, savedData.logoimage);
-    popCountryLine = populateCountry(arrCountry, cntryIx+1);
-    updatePreview(popCountryLine); 
-    updateBannerList(savedData.department);
-    bannerContent.innerHTML = updateBannerView(savedData.bannerimage);
-    //logoContent.innerHTML = updateLogoView(savedData.logoimage);
-  }   
+  renderForm();
+  updateStorageData();
+  updatePreview(); 
 });
