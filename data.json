@@ -208,7 +208,6 @@
       "name": "EcommerceIQ",
       "banner": [
         {
-          "id": 1,
           "type": "1column",
           "image": [
             "https://lh3.googleusercontent.com/d/17XVwWOWpXcosKCNMGBoYIehMSOIZUTWv"
@@ -218,7 +217,6 @@
           ]
         },
         {
-          "id": 3,
           "type": "2column",
           "image": [
             "https://lh3.googleusercontent.com/d/17XVwWOWpXcosKCNMGBoYIehMSOIZUTWv"
@@ -228,7 +226,6 @@
           ]
         },
         {
-          "id": 3,
           "type": "3column",
           "image": [
             "https://lh3.googleusercontent.com/d/17XVwWOWpXcosKCNMGBoYIehMSOIZUTWv"

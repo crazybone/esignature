@@ -8,8 +8,6 @@ const countrySelect = document.getElementById("country");
 const departmentSelect = document.getElementById("department");
 const logoList = document.getElementById("clogo");
 const bannerSelect = document.getElementById("banner");
-
-
 const countryListContainer = document.getElementById("country-list");
 const previewContainer = document.getElementById("signature-container");
 const leftContent = document.getElementById("left-content");
@@ -21,7 +19,7 @@ const formFields = ["fullname", "nickname", "title", "email", "ccode", "phone","
 var addressList = [], arrCountry = [];
 var sectionBanner = '', popCountryLine = '', idxCountry = 0, bannerImg = '', bannerLink = '';
 let countryTx = 'No country selected';
-let addressTx = "33rd Floor, 689 Bhiraj Tower Sukhumvit Rd, Bangkok 10110";
+let addressTx = "";
 let logoSelected = '';
 
 document.body.onload = () => {
@@ -91,38 +89,26 @@ const updatePreview = () => {
   phoneData = formatPhoneNumber();
 
   if( departmentSelect.value != '' && bannerSelect.value != '') {
-    bannerContentTemplate = getBanner(departmentSelect.value, bannerSelect.value);
-  }
-
-    /*
-  if(sectionBanner !== '') {
-    bannerContentTemplate = `<div class="img-container one-column" style="display:block;width:100%;max-width:640px;height:100%;"><a href="#"><img src="${sectionBanner}" width="100%" alt=""/></a></div>`;
-    
-    bannerContentTemplate = updateBannerView(sectionBanner);    
-  } else {
-    bannerContentTemplate = '';
-  }
-    */
-  
+    bannerContentTemplate = bannerFactory(departmentSelect.value, bannerSelect.value);  
+    //console.log('bannerContentTemplate: '+bannerContentTemplate);
+  } 
   let cLogo = getLogo(logoList.value);
   let rCont = updateRightContent(countryTx, addressTx, cLogo);
   let rightContentTemplate = '';
-
-
   if(rCont != ''){
     rightContentTemplate = rCont;
-    //console.log('updatePreview > rCont: '+rightContentTemplate);
   }
 
   let leftContentTemplate = `<table role="presentation" width="100%"><tr><td style="padding:0;" valign="middle"><p class="sender-name" style="margin:0;margin-top:8px;font-weight:bold;line-height:18px;color:#505050;">${fName}</p><p class="sender-title" style="margin:0;font-weight:400;line-height:18px;color:#909090;">${formData.title}</p></td></tr><tr><td style="padding:0;" valign="middle"><p class="sender-email" style="margin:0;margin-top:8px;font-weight:400;line-height:18px;color:#909090;">E: <a style="text-decoration:none;color:#909090;" class="mailto" href="mailto:${emailSender}">${emailSender}</a></p><p class="sender-phone" style="margin:0;font-weight:400;line-height:18px;color:#909090;">M: ${phoneData}</p></td></tr></table>`;
-
-  //console.log('rightContentTemplate: '+rightContentTemplate);
 
   leftContent.innerHTML = leftContentTemplate;
 
   rightContent.innerHTML = rightContentTemplate;
 
-  if(bannerContentTemplate !== '') bannerContent.innerHTML = bannerContentTemplate;
+  if(bannerContentTemplate !== '') {
+    //console.log('bannerContentTemplate: '+bannerContentTemplate);
+    bannerContent.innerHTML = bannerContentTemplate;
+  }
 }
 
 /*** Copy to Clipboard ***/
@@ -207,7 +193,7 @@ const deSelectedTx = () => {
 
 /*** Fetch Data ***/
 var mainData;
-fetch('data.json')
+fetch('data1.json')
 .then(response => response.json())
 .then(data => {
   mainData = data;
@@ -216,12 +202,14 @@ fetch('data.json')
   const departmentDropdown = document.getElementById('department');  
   const bannerDropdown = document.getElementById('banner');
   let currCountryCode = '';
+  addressTx = "33rd Floor, 689 Bhiraj Tower Sukhumvit Rd, Bangkok 10110";
 
   /*** Populate the Country dropdown ***/
   //countryDropdown.innerHTML = '<option value="" disabled selected>Select your Country</option>';
   data.countries.forEach(country => {
     arrCountry.push(country.name);
     addressList.push(country.address);
+    addressTx = addressList[0];
     const option = document.createElement('md-select-option');
     const cOption = document.createElement('md-select-option');
     const span = document.createElement('span');
@@ -240,6 +228,15 @@ fetch('data.json')
     countryCodeDropdown.appendChild(cOption);    
   });
 
+  /*** Populate the department dropdown ***/
+  data.departments.forEach(department => {
+    const option = document.createElement('md-select-option');
+    option.value = department.id;
+    option.textContent = department.name;
+    departmentDropdown.selectedIndex = 0;
+    departmentDropdown.appendChild(option);
+  });
+
   countryDropdown.addEventListener('change', () => {
     const selectedCountryId = countryDropdown.value;
     const selectedCountry = data.countries.find(
@@ -251,7 +248,6 @@ fetch('data.json')
     countryCodeDropdown.value = tmp;
     if(selectedCountryId && arrCountry.length) {
       idxCountry = selectedCountryId;
-      //popCountryLine = populateCountry(arrCountry, idxCountry);
     }
     //updatePreview();
   });
@@ -270,62 +266,50 @@ fetch('data.json')
     updateStorageData();
   });
 
-  /*** Populate the department dropdown ***/
-  data.departments.forEach(department => {
-    const option = document.createElement('md-select-option');
-    option.value = department.id;
-    option.textContent = department.name;
-    departmentDropdown.selectedIndex = 0;
-    departmentDropdown.appendChild(option);
-  });
-
   /*** add event Departments Dropdown ***/
   departmentDropdown.addEventListener('change', function () {
-    const selectedDepartmentId = parseInt(this.value);
-    const selectedDepartment = data.departments.find(
-      department => department.id === selectedDepartmentId
-    );
-
-    if (selectedDepartment) {
-      let dep = 0;
-      selectedDepartment.sections.forEach(section => {
-        dep++;
-        const option = document.createElement('md-select-option');
-        option.value = dep;
-        option.textContent = section.name;
-        bannerDropdown.appendChild(option);
-        //bannerDropdown.selectedIndex = 0;
-      });
-
-      let deptId = selectedDepartment.id;
-      if(deptId > 1) {
-        console.log('selectedDepartment id: '+deptId);
-
-        logoList.disabled = false;
-        bannerDropdown.disabled = false;
-      } else {
-        console.log('selectedDepartment id: '+deptId);
-        logoList.selectedIndex = 0;
-        logoList.disabled = true;
-        bannerDropdown.selectedIndex = 0;
-        bannerDropdown.disabled = true;
-      }
+    const sectionSelected = departmentDropdown.value;
+    updateBannerList(sectionSelected, bannerDropdown, 0);
+    let deptId = sectionSelected;      
+    if(deptId > 1) {
+      console.log('sectionSelected > 1: '+deptId);
+      bannerDropdown.value = deptId;
+      logoList.disabled = false;
+      bannerDropdown.disabled = false;
+    } else {
+      console.log('sectionSelected = 1: '+deptId);
+      logoList.selectedIndex = 0;
+      logoList.disabled = true;
+      bannerDropdown.disabled = true;
     }
+      bannerDropdown.selectedIndex = 0;
+    updatePreview();
+    updateStorageData();
   });
 
    /*** Populate the Banner dropdown ***/
   bannerDropdown.addEventListener('change', () => {
     const selectedDeptId = departmentDropdown.value;
-    const selectedSectionId = bannerDropdown.value;
+    const selectedBannerId = bannerDropdown.value;
 
-    if (selectedDeptId && selectedSectionId) {
-        const selectedDepartment = data.departments.find(dept => dept.id == selectedDeptId);
-        const selectedSection = selectedDepartment.sections.find(section => section.id == selectedSectionId);
-        if (selectedSection.banner.length > 0) {
-          sectionBanner = selectedSection.banner;
+
+    const selectedSection = data.departments.find(
+      section => section.id == selectedDeptId
+    );
+    if (selectedSection) {
+      selectedSection.sections.forEach(section => {
+        for (let key in section.banner) {
+          if(section.banner[key].bannerid == parseInt(selectedBannerId)) {
+            console.log('bannerid: '+section.banner[key].content);
+            sectionBanner = section.banner[key].content;
+          }
         }
+      });
     }
+    console.log('current bannerDropdown value: '+bannerDropdown.value);
+    //console.log('key: '+key+'  parseInt(selectedBannerId): '+parseInt(selectedBannerId));
     updatePreview();
+    updateStorageData();
   });
 
   /*** gen logo dropdown ***/
@@ -356,51 +340,51 @@ fetch('data.json')
 .catch(error => console.error('Error loading JSON:', error));
 
 
-const updateBannerList = (deptId) => { 
-  const departmentId = deptId;
-
-  //console.log('updateBannerList > deptId: '+deptId);
-
-  let departmentData;
-  if(mainData) {
-    departmentData  = mainData.departments.find(
-      department => department.id == departmentId
+const bannerFactory = (departmentvalue, bannerValue) => {
+  const selectedDeptId = departmentvalue;
+    const selectedBannerId = bannerValue;
+    const selectedSection = mainData.departments.find(
+      section => section.id == selectedDeptId
     );
-
-    if (departmentData) {
-      let dep = 0;
-      departmentData.sections.forEach(section => {
-        dep++;
-        const option = document.createElement('md-select-option');
-        option.value = dep;
-        option.textContent = section.name;
-        //option.setAttribute('data-banner', section.banner);
-        bannerSelect.appendChild(option);
+    let banner = '';
+    if (selectedSection) {
+      selectedSection.sections.forEach(section => {
+        for (let key in section.banner) {
+          if(section.banner[key].bannerid == parseInt(selectedBannerId)) {
+            banner = section.banner[key].content;
+          }            
+        }
       });
-      //bannerSelect.selectedIndex = 0;
+      //console.log('bannerFactory: '+banner);
+      return banner;
     }
-    //let deptId = departmentData.id
-    //if(deptId > 1) console.log('departmentData.id: '+deptId);
-    
-    bannerSelect.value = departmentId;
-  }
 }
 
-const getBanner = (deptId, sectId) => {
-  let imageBanner, bannerUrl, bannerTemplate;
-  if(mainData && deptId && sectId) {
-    const dataDept = mainData.departments.find(dept => dept.id == deptId);
-    const dataSect = dataDept.sections.find(section => section.id == sectId);
-    if (dataSect && dataSect.banner.length > 0) {
-      //console.log("getBanner image banner: " + dataSect.banner+" banner Url: "+dataSect.link);
-      //bannerImg = dataSect.banner[0];
-      imageBanner = bannerImg = dataSect.banner[0];
-      bannerUrl = dataSect.link[0];
-      if(imageBanner != '' && bannerUrl != '') {
-        bannerTemplate = `<div class="img-container" style="display:block;width:100%;max-width:640px;height:100%;"><a href="${bannerUrl}"><img src="${imageBanner}" width="100%" alt=""/></a></div>`;
-      }
-      return bannerTemplate;
-    }
+const updateBannerList = (deptId, dropdownList, ind) => { 
+  const departmentId = deptId;
+  const bannerId = dropdownList.value;
+  let departmentData;
+  if(mainData) {
+    departmentData = mainData.departments.find(
+      department => department.id == departmentId
+    );
+  } 
+
+  if(departmentData) {
+    let dep = 0;      
+    dropdownList.innerHTML = "";
+    departmentData.sections.forEach(section => {
+      let bannerList = section.banner;
+      bannerList.forEach(banner => {          
+        //console.log('updateBannerList: '+banner.name);
+        dep++;
+        const option = document.createElement('md-select-option');        
+        option.value = dep;
+        option.textContent = banner.name;
+        dropdownList.appendChild(option);
+      });
+    });  
+      bannerSelect.selectedIndex = ind;        
   }
 }
 
@@ -416,6 +400,14 @@ const getLogo = (logoId) => {
       return '';
     }
   }
+}
+const updateLogoView = (logoUrl) => {
+  let logoTmp = '';
+  //console.log('updateLogoView > param logoUrl: '+logoUrl);
+  if(logoUrl != '') {
+    logoTmp = '<div style="display:block;width:100%;height:100%;"><a href="https://www.acommerce.asia/" target="_blank" style="display:block;"><img src="'+logoUrl+'" width="200" alt="aCommerce"/></a></div>';
+  }
+  return logoTmp;
 }
 
 const updateRightContent = (cntryTx, addrTx, logoImg) => {
@@ -435,67 +427,42 @@ const updateRightContent = (cntryTx, addrTx, logoImg) => {
     return rightTemplate;
   }
 }
-
-const updateBannerView = (bannerData,bannerLink) => {  
-  //console.log('bannerData: '+bannerData);
-  let bannerTmp = '';
-  if(bannerData) bannerTmp = '<div class="img-container" style="display:block;width:100%;max-width:640px;height:100%;"><a href="'+bannerLink+'"><img src="'+bannerData+'" width="100%" alt=""/></a></div>'; 
-  return bannerTmp
-}
-
-const updateLogoView = (logoUrl) => {
-  let logoTmp = '';
-  //console.log('updateLogoView > param logoUrl: '+logoUrl);
-  if(logoUrl != '') {
-    logoTmp = '<div style="display:block;width:100%;height:100%;"><a href="https://www.acommerce.asia/" target="_blank" style="display:block;"><img src="'+logoUrl+'" width="200" alt="aCommerce"/></a></div>';
-  }
-  return logoTmp;
-}
-
 const updateStorageData = () => {
-  let dataImg = bannerImg;
-  console.log('dataImg: '+dataImg);
+  //let dataImg = bannerImg;
 
   const data = {
-      fullname: fullName.value,
-      nickname: nickName.value,
-      title: titleName.value,
-      email: eAddress.value,
-      ccode: inpCode.value,
-      phone: inpPhone.value,
-      department: departmentSelect.value,
-      banner: bannerSelect.value,
-      countryid: countrySelect.selectedIndex+1,
-      countryname: countrySelect.value,
-      bannerimage: "https://lh3.googleusercontent.com/d/1b1JpolzRPdcxTlYNd7VKte0OJ0xwQvkd",
-      bannerlink: "https://www.acommerce.asia/",
-      address: addressTx,
-      logoid: logoList.value,
-      logoimage: getLogo(logoList.value)
+    address: addressTx,
+    banner: bannerSelect.value,    
+    ccode: inpCode.value,
+    countryid: countrySelect.selectedIndex+1,
+    countryname: countrySelect.value,
+    department: departmentSelect.value,
+    email: eAddress.value,
+    fullname: fullName.value,
+    logoid: logoList.value,
+    logoimage: getLogo(logoList.value),
+    nickname: nickName.value,
+    phone: inpPhone.value,
+    title: titleName.value,
+    bannerimage: bannerFactory(departmentSelect.value, bannerSelect.value)
   };  
   localStorage.setItem("fData", JSON.stringify(data));
 }
 
 const signatureForm = document.getElementById('signature-form');
 
-
 const renderForm = () => {
   const getData = JSON.parse(localStorage.getItem("fData"));
+  const listBanner = document.getElementById('banner');
   if(getData) {
     let codeClass = "66";
-
-    if(getData.ccode != '') {
-      codeClass = getData.ccode;
-    }      
-    
+    if(getData.ccode != '') codeClass = getData.ccode;    
     addressTx = getData.address || "";
     countryTx = getData.countryname || "";
-
     fullName.value = getData.fullname || "";
     nickName.value = getData.nickname || "";
     titleName.value = getData.title || "";
     eAddress.value = getData.email || "";
-
     if(getData.ccode != '') {
       let currentClass = inpCode.className;
       if(classExist(inpCode)) {
@@ -508,16 +475,15 @@ const renderForm = () => {
       inpCode.classList.add('flag66');
     }
     inpPhone.value = getData.phone || "";
+    listBanner.value = getData.banner || "";
     departmentSelect.value = getData.department || "";
-    bannerSelect.value = getData.banner || "";
     countrySelect.value = getData.countryname || "";  
     countrySelect.selectedIndex = parseInt(getData.countryid)-1;  
     inpCode.selectedIndex = parseInt(getData.countryid)-1;  
+
     if(getData.department > 1) {
-      //logoList.selectedIndex = 0;
       logoList.disabled = false;
-      //bannerDropdown.selectedIndex = 0;
-      bannerSelect.disabled = false;
+      listBanner.disabled = false;
     }
     
     if(getData.logoid != '') {
@@ -525,14 +491,12 @@ const renderForm = () => {
     } else {
       logoList.selectedIndex = 1;
     }
-    updateBannerList(getData.department);    
-    updateSelectedFlag(codeClass);  
-    //bannerContent.innerHTML = getBanner(); 
-    //bannerContent.innerHTML = updateBannerView(getData.bannerimage);
+
+    updateBannerList(getData.department, listBanner, parseInt(getData.banner)-1);    
+    updateSelectedFlag(codeClass);
   } else {   
-    updateBannerList(1);  
+    updateBannerList(1, listBanner, 0);  
   }
-  //console.log('addressList: '+addressList);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -546,6 +510,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   renderForm();
-  updateStorageData();
   updatePreview(); 
 });
