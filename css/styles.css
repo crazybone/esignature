@@ -123,6 +123,12 @@ form select {
   width: 48%;
 }
 
+.fieldset > md-outlined-select[disabled] {
+  border: 1px solid #dfdfdf;
+  border-radius: 10px;
+  background-color: #f4f4f4;
+}
+
 .last {
   margin-right: auto;
 }
@@ -388,6 +394,7 @@ select[aria-label]::placeholder {
 :root {  
   /* Select field */
   --md-sys-color-secondary-container: #FAF9F9;
+  --md-outlined-select-text-field-container-color: red;
   --md-outlined-select-text-field-container-shape: 10px;
   --md-outlined-select-text-field-outline-width: 1px;
   --md-outlined-select-text-field-disabled-outline-width: 1px;

@@ -202,10 +202,11 @@ fetch('data1.json')
   const departmentDropdown = document.getElementById('department');  
   const bannerDropdown = document.getElementById('banner');
   let currCountryCode = '';
-  addressTx = "33rd Floor, 689 Bhiraj Tower Sukhumvit Rd, Bangkok 10110";
+  addressTx = "";
 
   /*** Populate the Country dropdown ***/
   //countryDropdown.innerHTML = '<option value="" disabled selected>Select your Country</option>';
+  
   data.countries.forEach(country => {
     arrCountry.push(country.name);
     addressList.push(country.address);
@@ -291,8 +292,6 @@ fetch('data1.json')
   bannerDropdown.addEventListener('change', () => {
     const selectedDeptId = departmentDropdown.value;
     const selectedBannerId = bannerDropdown.value;
-
-
     const selectedSection = data.departments.find(
       section => section.id == selectedDeptId
     );
@@ -300,14 +299,11 @@ fetch('data1.json')
       selectedSection.sections.forEach(section => {
         for (let key in section.banner) {
           if(section.banner[key].bannerid == parseInt(selectedBannerId)) {
-            console.log('bannerid: '+section.banner[key].content);
             sectionBanner = section.banner[key].content;
           }
         }
       });
     }
-    console.log('current bannerDropdown value: '+bannerDropdown.value);
-    //console.log('key: '+key+'  parseInt(selectedBannerId): '+parseInt(selectedBannerId));
     updatePreview();
     updateStorageData();
   });
