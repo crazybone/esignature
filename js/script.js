@@ -193,7 +193,8 @@ const deSelectedTx = () => {
 
 /*** Fetch Data ***/
 var mainData;
-fetch('data1.json')
+//fetch('data2.json')
+fetch('https://crazybone.github.io/esdm/db.json')
 .then(response => response.json())
 .then(data => {
   mainData = data;
@@ -233,7 +234,7 @@ fetch('data1.json')
   data.departments.forEach(department => {
     const option = document.createElement('md-select-option');
     option.value = department.id;
-    option.textContent = department.name;
+    option.textContent = department.departmentname;
     departmentDropdown.selectedIndex = 0;
     departmentDropdown.appendChild(option);
   });
@@ -293,13 +294,13 @@ fetch('data1.json')
     const selectedDeptId = departmentDropdown.value;
     const selectedBannerId = bannerDropdown.value;
     const selectedSection = data.departments.find(
-      section => section.id == selectedDeptId
+      department => department.id == selectedDeptId
     );
     if (selectedSection) {
-      selectedSection.sections.forEach(section => {
-        for (let key in section.banner) {
-          if(section.banner[key].bannerid == parseInt(selectedBannerId)) {
-            sectionBanner = section.banner[key].content;
+      selectedSection.banners.forEach(banner => {
+        for (let key in banner) {
+          if(banner[key].bannerid == parseInt(selectedBannerId)) {
+            sectionBanner = banner[key].content;
           }
         }
       });
@@ -340,19 +341,17 @@ const bannerFactory = (departmentvalue, bannerValue) => {
   const selectedDeptId = departmentvalue;
     const selectedBannerId = bannerValue;
     const selectedSection = mainData.departments.find(
-      section => section.id == selectedDeptId
+      department => department.id == selectedDeptId
     );
-    let banner = '';
+    let bnnr = '';
     if (selectedSection) {
-      selectedSection.sections.forEach(section => {
-        for (let key in section.banner) {
-          if(section.banner[key].bannerid == parseInt(selectedBannerId)) {
-            banner = section.banner[key].content;
-          }            
+      selectedSection.banners.forEach(banner => {
+        if(banner.bannerid == parseInt(selectedBannerId)) {
+          bnnr = banner.content;
         }
       });
-      //console.log('bannerFactory: '+banner);
-      return banner;
+      //console.log('bannerFactory: '+bnnr);
+      return bnnr;
     }
 }
 
@@ -367,19 +366,22 @@ const updateBannerList = (deptId, dropdownList, ind) => {
   } 
 
   if(departmentData) {
-    let dep = 0;      
+    let dep = 0;
+    let bannerList = [];
     dropdownList.innerHTML = "";
-    departmentData.sections.forEach(section => {
-      let bannerList = section.banner;
-      bannerList.forEach(banner => {          
-        //console.log('updateBannerList: '+banner.name);
-        dep++;
-        const option = document.createElement('md-select-option');        
-        option.value = dep;
-        option.textContent = banner.name;
-        dropdownList.appendChild(option);
-      });
+    departmentData.banners.forEach(banner => {
+      bannerList.push(banner.name);
     });  
+    if(bannerList.length) {
+      const len = bannerList.length;
+      for (var i = 0; i < len; i++) {
+        //console.log('bannerList: '+bannerList[i]);
+        const option = document.createElement('md-select-option');        
+        option.value = i + 1;
+        option.textContent = bannerList[i];
+        dropdownList.appendChild(option);
+      }
+    }
       bannerSelect.selectedIndex = ind;        
   }
 }
