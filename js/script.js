@@ -23,7 +23,7 @@ let addressTx = "";
 let logoSelected = '';
 
 document.body.onload = () => {
-  inpCode.classList.add('flag66');
+  if(!classExist(inpCode)) inpCode.classList.add('flag66');
 }
 
 document.getElementById("signature-form").addEventListener("input", () => {
@@ -99,7 +99,7 @@ const updatePreview = () => {
     rightContentTemplate = rCont;
   }
 
-  let leftContentTemplate = `<table role="presentation" width="100%"><tr><td style="padding:0;" valign="middle"><p class="sender-name" style="margin:0;margin-top:8px;font-weight:bold;line-height:18px;color:#505050;">${fName}</p><p class="sender-title" style="margin:0;font-weight:400;line-height:18px;color:#909090;">${formData.title}</p></td></tr><tr><td style="padding:0;" valign="middle"><p class="sender-email" style="margin:0;margin-top:8px;font-weight:400;line-height:18px;color:#909090;">E: <a style="text-decoration:none;color:#909090;" class="mailto" href="mailto:${emailSender}">${emailSender}</a></p><p class="sender-phone" style="margin:0;font-weight:400;line-height:18px;color:#909090;">M: ${phoneData}</p></td></tr></table>`;
+  let leftContentTemplate = `<table role="presentation" width="100%"><tr><td style="padding:0;" valign="middle"><p class="sender-name" style="margin:0;margin-top:8px;font-weight:bold;line-height:18px;color:#505050;">${fName}</p><p class="sender-title" style="margin:0;font-weight:400;line-height:18px;color:#909090;">${formData.title}</p></td></tr><tr><td style="padding:0;" valign="middle"><p class="sender-email" style="margin:0;margin-top:8px;font-weight:400;line-height:18px;color:#909090;"><b>E: </b><a style="text-decoration:none;color:#909090;" class="mailto" href="mailto:${emailSender}">${emailSender}</a></p><p class="sender-phone" style="margin:0;font-weight:400;line-height:18px;color:#909090;"><b>M: </b>${phoneData}</p></td></tr></table>`;
 
   leftContent.innerHTML = leftContentTemplate;
 
@@ -139,7 +139,7 @@ document.getElementById("copy-signature").addEventListener("click", () => {
 });
 
 const updateSelectedFlag = (flagCode) => {  
-  let currentClass = inpCode.className;
+  let currentClass = inpCode.className; 
   let newCode = 'flag'+flagCode;
   let tmp = classExist(inpCode);
   if(!tmp) {
@@ -152,7 +152,7 @@ const updateSelectedFlag = (flagCode) => {
 
 const classExist = (element) => {
   let current = (element.className).substr(0,4);
-  if(current == 'flag') return true;
+  if(current === 'flag') return true;
   return false;
 }
 
@@ -418,7 +418,7 @@ const updateRightContent = (cntryTx, addrTx, logoImg) => {
 
   if(logoSrc != '') {
     //let theRight = document.getElementById("right-content");
-    rightTemplate = '<table role="presentation" width="100%"><tr><td style="width:50%;padding:0 10px 0 0;" valign="middle">'+logoSrc+'</td><td style="width:50%;padding:0 10px 0 0;"><ul style="list-style:none;margin:0;padding:0;display:inline-block;float:right;"><li class="social-icon" style="display:inline-block;width:25px;"><a href="https://www.facebook.com/acommerce.asia/"><img src="https://lh3.googleusercontent.com/d/1CG__yxnVK7nIwsdGCueTTGO39PZWu3AW" alt="Facebook" width="20" class="sender-fb"/></a></li><li class="social-icon" style="display:inline-block;width:25px;"><a href="https://www.linkedin.com/company/acommerce/"><img src="https://lh3.googleusercontent.com/d/14sHVcrwreh-6-TCge2J5tyt-g6AtFP6E" alt="LinkedIn" width="20" class="sender-fb"/></a></li></ul></td></tr><tr><td colspan="2" style="width:100%;padding:0 10px 0 0;"><p class="sender-address" style="margin:0 0 5px;padding:0;display:block;font-weight:400;line-height:18px;color:#909090;">A: '+addrTx+'</p><p style="margin:0;font-weight:400;line-height:18px;color:#909090;" id="country-list">'+cntryTx+'</p></td></tr></table>'; 
+    rightTemplate = '<table role="presentation" width="100%"><tr><td style="width:50%;padding:0 10px 0 0;" valign="middle">'+logoSrc+'</td><td style="width:50%;padding:0 10px 0 0;"><ul style="list-style:none;margin:0;padding:0;display:inline-block;float:right;"><li class="social-icon" style="display:inline-block;width:25px;"><a href="https://www.facebook.com/acommerce.asia/"><img src="https://lh3.googleusercontent.com/d/1CG__yxnVK7nIwsdGCueTTGO39PZWu3AW" alt="Facebook" width="20" class="sender-fb"/></a></li><li class="social-icon" style="display:inline-block;width:25px;"><a href="https://www.linkedin.com/company/acommerce/"><img src="https://lh3.googleusercontent.com/d/14sHVcrwreh-6-TCge2J5tyt-g6AtFP6E" alt="LinkedIn" width="20" class="sender-fb"/></a></li></ul></td></tr><tr><td colspan="2" style="width:100%;padding:0 10px 0 0;"><p class="sender-address" style="margin:0 0 5px;padding:0;display:block;font-weight:400;line-height:18px;color:#909090;"><b>A: </b>'+addrTx+'</p><p style="margin:0;font-weight:400;line-height:18px;color:#909090;" id="country-list">'+cntryTx+'</p></td></tr></table>'; 
     
     //console.log('rightTemplate: '+rightTemplate);
     //theRight.innerHTML = rightTemplate;

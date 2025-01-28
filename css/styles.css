@@ -20,6 +20,7 @@ body {
   width: 100%;
   height: 99%;
   display: flex;
+  flex-direction: row;
 }
 .split {
   height: 100vh;
@@ -651,7 +652,11 @@ md-filled-button[id*='request'] {
 }
 
 /* Responsive Design */
-@media only screen and (max-width: 420px) {
+@media only screen and (max-width: 1024px) {
+  
+.main {
+  flex-direction: column;
+}
   .left-container {
     max-width: 100%!important;
     font-family: 'Prompt', Arial, sans-serif;
@@ -662,4 +667,21 @@ md-filled-button[id*='request'] {
     max-width: 100%!important;
     font-family: 'Prompt', Arial, sans-serif;
   }
+  
+  .split {
+    height: 100%;
+    margin-top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .fieldset {
+    margin-top: 25px;
+    width: 96%;
+}
 }
