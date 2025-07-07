@@ -194,7 +194,8 @@ const deSelectedTx = () => {
 /*** Fetch Data ***/
 var mainData;
 //fetch('data2.json')
-fetch('https://crazybone.github.io/esdm/db.json')
+//fetch('https://crazybone.github.io/esdm/db.json')
+  fetch('https://dev-wyeth-3.pdoh-dev.acommercedev.com/countries')
 .then(response => response.json())
 .then(data => {
   mainData = data;
